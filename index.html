@@ -1,0 +1,42 @@
+<html><head></head>
+<body>
+  <input type="text" id="search"/>
+  <div id="results"/>
+
+  <!-- TODO: Use separate js file -->
+  <script defer>
+    var input = document.getElementById("search");
+    var results = document.getElementById("results");
+
+    input.addEventListener('input', function() {
+      var searchText = input.value;
+      if (!searchText || searchText.length < 2) {
+        results.innerText = ""; // Reset results area.
+        return;
+      }
+
+      doSearch(searchText, function(aCarsArray) {
+        console.log(JSON.stringify(aCarsArray));
+        if (0 === aCarsArray.length) {
+          results.innerText = "No matching brands found.";
+        } else {
+          results.innerText = aCarsArray.join("\n");
+        }
+      });
+    });
+
+    function doSearch(aValue, aCallback) {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (XMLHttpRequest.DONE === xhr.readyState &&
+            200 === xhr.status &&
+            "json" === xhr.responseType) {
+          aCallback(JSON.parse(xhr.responseText));
+        }
+      }
+      xhr.open("GET", "cars?" + aValue, true);
+      xhr.send();
+    }
+  </script>
+</body>
+</html>
