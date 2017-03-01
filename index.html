@@ -29,8 +29,7 @@
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function() {
         if (XMLHttpRequest.DONE === xhr.readyState &&
-            200 === xhr.status &&
-            "json" === xhr.responseType) {
+            200 === xhr.status) {
           aCallback(JSON.parse(xhr.responseText));
         }
       }

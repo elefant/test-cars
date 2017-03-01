@@ -37,7 +37,7 @@ http.createServer(function (req, res) {
 
   // Asking for root page.
   if ('/' === urlObject.pathname) {
-    res.writeHead(200, {'Content­Type': 'text/html'});
+    res.writeHead(200, {'Content-­Type': 'text/html'});
     res.end(index);
     return;
   }
@@ -46,7 +46,7 @@ http.createServer(function (req, res) {
 
   // Process the query and respond invalid one immediately.
   function respondBadRequest(aReason, aResponse) {
-    aResponse.writeHead(400, {'Content­Type': 'text/plain'});
+    aResponse.writeHead(400, {'Content-­Type': 'text/plain'});
     aResponse.end(aReason);
   }
   var queryKeys = Object.keys(urlObject.query);
@@ -62,7 +62,7 @@ http.createServer(function (req, res) {
   var matches = searcher.search(key);
 
   // Write out the result.
-  res.writeHead(200, {'Content­Type': 'application/json'});
+  res.writeHead(200, {'Content­-Type': 'application/json'});
   res.write(JSON.stringify(matches));
 
   res.end();
