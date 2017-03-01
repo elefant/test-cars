@@ -1,0 +1,66 @@
+Q1. Please provide a list of search terms used to test your code above and their expected result(s)
+
+(I assume you are asking for the expected results on the UI. For the API itself, it's another story...)
+
+Input: "" (less than 2 chars)
+Output: ""
+
+--
+
+Input: "a" (less than 2 chars)
+Output: ""
+
+--
+
+Input: "asfsfgSDFGSDFGsdfgsdHSDFGsdfgSDFdsfdsfgsdFG" (very long string)
+Output: "No matching brands found."
+
+--
+
+Input: "sa" (normal case)
+Output:
+
+Nissan
+Saab
+Saturn
+
+--
+
+Input: "sA" (test case-insensitivity)
+Output:
+
+Nissan
+Saab
+Saturn
+
+--
+
+Input: "<script>Evil things...</script>" (test XSS)
+Output: "No matching brands found."
+
+--
+
+Input: "\\\$\/s/s\$" (test regular expression special char)
+Output: "No matching brands found."
+
+Q2. What problems might you encounter if your webpage was used by multiple users at the same time?
+
+Since nodejs is by nature single threaded, requests will be pending if one request is being processed.
+For example, a simple request will be blocked by a very complicated request.
+
+Q3. How would you solve these problems?
+
+Since there's no dependecy between requests, we can post search text to worker to do the computation asynchronously. After being processed, the worker posts back the result to the main thread to respond. We can limit the number of workers to avoid running out all the resources.
+
+Q4. Suppose you had 10,000 car brands to search through. Would you change your approach on the API implementation? If so, how?
+
+Enumerate all the substrings of the brands and build a prefix tree, each leaf of which points to a list of the original full string. Given a user input, we travser the prefix tree with the input. If we can go to the leaf,  return the list of strings pointed by the lead.
+
+The search complexity will be O(length of the input string)
+
+
+
+
+
+
+
